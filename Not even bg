@@ -1,0 +1,38 @@
+-- Auto Farm GUI for PSX-style game by Newsan bro 😎
+local ScreenGui = Instance.new("ScreenGui")
+local Frame = Instance.new("Frame")
+local AutoFarmButton = Instance.new("TextButton")
+
+-- Setup GUI
+ScreenGui.Parent = game.CoreGui
+Frame.Parent = ScreenGui
+Frame.Size = UDim2.new(0, 200, 0, 100)
+Frame.Position = UDim2.new(0, 20, 0, 200)
+Frame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+
+AutoFarmButton.Parent = Frame
+AutoFarmButton.Size = UDim2.new(0, 180, 0, 50)
+AutoFarmButton.Position = UDim2.new(0, 10, 0, 25)
+AutoFarmButton.Text = "Start Auto Farm 🚀"
+AutoFarmButton.BackgroundColor3 = Color3.fromRGB(60, 180, 90)
+
+-- Auto Farm Toggle
+local farming = false
+
+AutoFarmButton.MouseButton1Click:Connect(function()
+    farming = not farming
+    AutoFarmButton.Text = farming and "Auto Farm: ON ✅" or "Start Auto Farm 🚀"
+
+    spawn(function()
+        while farming do
+            local args = {
+                CFrame.new(90.1285, 94.1954, 270.6835),
+                CFrame.new(100.6710, 100.7345, 275.1234),
+                CFrame.new(90.1285, 95.6954, 270.6835)
+            }
+
+            game:GetService("ReplicatedStorage"):WaitForChild("RemoteEvent"):FireServer(unpack(args))
+            wait(0.3)
+        end
+    end)
+end)
